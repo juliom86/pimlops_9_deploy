@@ -98,19 +98,19 @@ def get_contents(rating: str):
     return {'rating': rating, 'contenido': conteo}
 
 
-@app.get('/prod_per_county/{tipo}/{pais}/{anio}')
-def prod_per_county(tipo: str, pais: str, anio: int):
+@app.get('/prod_per_country/{tipo}/{pais}/{anio}')
+def prod_per_country(tipo: str, pais: str, anio: int):
     df = pd.read_csv('data_final.csv')
     film = df.loc[(df.type == tipo) & (df.country == pais) &
                   (df.release_year == anio)]
     cantidad = film.shape[0]
-    return {'pais': pais, 'anio': anio, 'peliculas': cantidad}
+    return {'pais': pais, 'anio': anio, 'contenido': cantidad}
 
 
 
 @app.get('/get_recomendation/{title}')
 def get_recomendation(title,):
-    df = pd.read_csv("data_final.csv")
+    df = pd.read_csv("data_final.csv").iloc[0:1000]
     tfidf = TfidfVectorizer(stop_words="english")
     df["description"] = df["description"].fillna("")
 
