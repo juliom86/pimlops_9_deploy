@@ -101,7 +101,7 @@ def get_contents(rating: str):
 @app.get('/prod_per_country/{tipo}/{pais}/{anio}')
 def prod_per_country(tipo: str, pais: str, anio: int):
     df = pd.read_csv('data_final.csv')
-    film = df.loc[(df.type == tipo) & (df.country == pais) &
+    film = df.loc[(df.type == tipo) & (df.country.str.contains(pais)) &
                   (df.release_year == anio)]
     cantidad = film.shape[0]
     return {'pais': pais, 'anio': anio, 'contenido': cantidad}
